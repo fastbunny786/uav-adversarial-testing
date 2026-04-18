@@ -1,0 +1,54 @@
+# ---- Python ----
+# Bytecode caches created automatically when Python imports modules.
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments. uv creates .venv/ — never commit it;
+# it's huge, platform-specific, and reproducible from pyproject.toml + lockfile.
+.venv/
+venv/
+env/
+
+# pytest / coverage / ruff / mypy caches
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+.ruff_cache/
+.mypy_cache/
+
+# Build / packaging artifacts
+dist/
+build/
+*.egg-info/
+*.egg
+
+# ---- Editors / IDEs ----
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# ---- OS metadata ----
+.DS_Store
+Thumbs.db
+
+# ---- Secrets — NEVER commit ----
+# Environment variable files that typically contain API keys, tokens, passwords.
+.env
+.env.*
+!.env.example
+# Private keys
+*.pem
+*.key
+
+# ---- Project-specific (future) ----
+# PX4 ULog flight log files are large binary blobs; we'll store them
+# externally (e.g. W&B artifacts) once Phase 1 starts.
+*.ulg
+*.ulog
+
+# MkDocs build output — we never commit the rendered site,
+# GitHub Actions will build it fresh on deploy.
+site/
