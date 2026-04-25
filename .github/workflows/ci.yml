@@ -1,0 +1,48 @@
+# Continuous Integration workflow.
+#
+# Runs on every push to any branch and on every pull request.
+# Sets up Python 3.12 via uv, installs the project from the lockfile,
+# and runs the pytest suite. A green check on this workflow means:
+#   - the project's lockfile resolves cleanly
+#   - the package installs in a fresh environment
+#   - all tests pass
+#
+# Phase 0 baseline: deliberately minimal. Linting, type checking, and
+# coverage will be added incrementally in later phases.
+
+name: CI
+
+on:
+  push:
+    branches: ["**"]      # all branches
+  pull_request:
+    branches: ["**"]      # PRs targeting any branch
+
+jobs:
+  test:
+    name: pytest
+    runs-on: ubuntu-latest
+
+    steps:
+      # Check out the repo into the runner's working directory.
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Install uv. Pinned to v5 (current major) for stability;
+      # bump deliberately when we want a newer uv.
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true   # caches the uv download cache between runs
+
+      # Install Python 3.12 via uv. uv reads .python-version from the repo.
+      - name: Install Python
+        run: uv python install
+
+      # Recreate the venv from uv.lock. Identical resolution to local dev.
+      - name: Sync dependencies
+        run: uv sync --all-extras --dev
+
+      # Run the test suite. -v gives verbose output so failures are readable.
+      - name: Run pytest
+        run: uv run pytest -v
