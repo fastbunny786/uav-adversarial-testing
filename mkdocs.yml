@@ -12,14 +12,13 @@ theme:
     accent: indigo
   features:
     - navigation.tabs
-    - navigation.sections
     - toc.integrate
     - content.code.copy
 
 nav:
   - Home: index.md
   - Architecture Decisions:
-    - ADR #001 - ROS 2 Humble: adr/001-ros2-humble.md
+    - "ADR 001 - ROS 2 Humble": adr/001-ros2-humble.md
 
 markdown_extensions:
   - pymdownx.highlight
