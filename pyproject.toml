@@ -9,6 +9,8 @@ authors = [
 requires-python = ">=3.12"
 dependencies = [
     "mavsdk>=3.15.3",
+    "pandas>=3.0.3",
+    "pandera>=0.31.1",
     "pyulog>=1.2.2",
 ]
 
