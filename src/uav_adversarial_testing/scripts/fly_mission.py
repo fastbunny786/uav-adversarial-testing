@@ -6,6 +6,7 @@ Connects to PX4 SITL via MAVSDK over UDP.
 import asyncio
 from mavsdk import System
 from mavsdk.mission import MissionItem, MissionPlan
+from mavsdk.telemetry import LandedState
 
 
 async def run():
@@ -77,8 +78,16 @@ async def run():
 
     print("Landing...")
     await drone.action.land()
+
+    print("Waiting for landed confirmation...")
+    async for landed_state in drone.telemetry.landed_state():
+        if landed_state == LandedState.ON_GROUND:
+            print("Landed confirmed.")
+            break
+
     print("Done.")
 
 
 if __name__ == "__main__":
     asyncio.run(run())
+
